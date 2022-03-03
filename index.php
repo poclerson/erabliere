@@ -5,7 +5,9 @@ if (isset($_POST['nouveau-client'])) {
     $taille = $_POST['taille'];
 
     $places = json_decode(file_get_contents('places.json'), true);
-    $places[$type][$date] -= $taille;
+    if ($places[$type][$date] > $taille) {
+        $places[$type][$date] -= $taille;
+    }
 
     print_r("Nombre de places restantes pour le " . $date . " : " . $places[$type][$date]);
     file_put_contents('places.json', json_encode($places));
